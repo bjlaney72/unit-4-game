@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <title>Crystal Game</title>
+</head>
+
+<body>
+
+    <div class="container game-container">
+
+        <div class="row">
+            <h1>The Crystal Game</h1>
+        </div>
+
+        <div class="instruction-row">
+            <h2>How the game works...</h2>
+            <p>The computer will display a number in the green box below.</p>
+            <p>There are four crystals that you can select from. Each crystal has a randomly assigned number between 1 and 12.
+                The number associated with each crystal can only be determined as they are selected, so you have to remember each
+                crystal's value as you proceed through the game.</p>
+            <p>The object of the game is to choose a sequence of crystals that match the computer generated "target number."</p>
+
+ 
+        </div>
+
+        <div class="row">
+
+            <div class="col-md score-row gem-img">
+                <row>Number to Match</row>
+                <row>
+                    <span id="target-num">0</span>
+                </row>
+            </div>
+            <div class="col-md score-row gem-img">
+                <row>Your Current Sum</row>
+                <row>
+                    <span id="player-num">0</span>
+                </row>
+            </div>
+            <div class="col-md score-row gem-img">
+                <row>
+                    <span>Wins: </span>
+                    <span id="wins">0</span>
+                </row>
+                <br>
+                <br>
+                <row>
+                    <span>Losses: </span>
+                    <span id="losses">0</span>
+                </row>
+
+            </div>
+
+
+        </div>
+
+        <div class="gem-row">
+            <button id="garnet">
+                <img class="gem-img" src="assets/images/Garnet.png">
+            </button>
+            <button id="sapphire">
+                <img class="gem-img" src="assets/images/Sapphire.png">
+            </button>
+            <button id="pearl">
+                <img class="gem-img" src="assets/images/Pearl.png">
+            </button>
+            <button id="crystal">
+                <img class="gem-img" src="assets/images/Swarovski crystal.png">
+            </button>
+            <button id="reset">
+                <img class="gem-img" src="assets/images/reset-button.jpg">
+            </button>
+        </div>
+
+
+
+    </div>
+
+    <script>
+        $(document).ready(function () {})
+
+        var targetNum = 0
+        var playerNum = 0
+        var winsNum = 0
+        var lossesNum = 0
+
+
+        $("#wins").text(winsNum)
+        $("#losses").text(lossesNum)
+
+        function getRandom(min, max) {
+            var newNum = Math.floor(Math.random() * (max - min + 1)) + min;
+            return newNum;
+        }
+
+        function resetGame() {
+            targetNum = targetNum = getRandom(19, 120);
+            $("#target-num").text(targetNum)
+            playerNum = 0
+            $("#player-num").text(playerNum)
+            /*    winsNum = 0
+               lossesNum = 0 */
+            garnetNum = getRandom(1, 12);
+            sapphireNum = getRandom(1, 12);
+            pearlNum = getRandom(1, 12);
+            crystalNum = getRandom(1, 12);
+
+        }
+
+        resetGame()
+
+        $("#garnet").on("click", function () {
+            playerNum = playerNum + garnetNum
+            $("#player-num").text(playerNum)
+            checkScore(playerNum)
+        });
+
+        $("#sapphire").on("click", function () {
+            playerNum = playerNum + sapphireNum
+            $("#player-num").text(playerNum)
+            checkScore(playerNum)
+        });
+
+        $("#pearl").on("click", function () {
+            playerNum = playerNum + pearlNum
+            $("#player-num").text(playerNum)
+            checkScore(playerNum)
+        });
+
+        $("#crystal").on("click", function () {
+            playerNum = playerNum + crystalNum
+            $("#player-num").text(playerNum)
+            checkScore(playerNum)
+        });
+
+
+        function checkScore(player) {
+            if (player == targetNum) {
+                winsNum += 1
+                $("#wins").text(winsNum)
+                alert("player wins")
+                resetGame()
+            } else if (player > targetNum) {
+                lossesNum += 1
+                $("#losses").text(lossesNum)
+                resetGame()
+            } else {
+                /*  do nothing */
+            }
+
+            $("#reset").on("click", function () {
+                var winsNum = 0
+                var lossesNum = 0
+
+                $("#wins").text(winsNum)
+                $("#losses").text(lossesNum)
+                checkScore(playerNum)
+            });
+
+        }
+    </script>
+
+
+</body>
+
+</html>
